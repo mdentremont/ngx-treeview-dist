@@ -1,6 +1,6 @@
 import { Directive, ElementRef } from '@angular/core';
 import { DropdownDirective } from './dropdown.directive';
-var DropdownToggleDirective = (function () {
+var DropdownToggleDirective = /** @class */ (function () {
     function DropdownToggleDirective(dropdown, elementRef) {
         this.dropdown = dropdown;
         dropdown.toggleElement = elementRef.nativeElement;
@@ -19,8 +19,8 @@ var DropdownToggleDirective = (function () {
     ];
     /** @nocollapse */
     DropdownToggleDirective.ctorParameters = function () { return [
-        { type: DropdownDirective, },
-        { type: ElementRef, },
+        { type: DropdownDirective },
+        { type: ElementRef }
     ]; };
     return DropdownToggleDirective;
 }());

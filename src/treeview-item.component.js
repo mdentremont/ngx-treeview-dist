@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import * as _ from 'lodash';
+import { isNil } from 'lodash';
 import { TreeviewItem } from './treeview-item';
 import { TreeviewConfig } from './treeview-config';
-var TreeviewItemComponent = (function () {
+var TreeviewItemComponent = /** @class */ (function () {
     function TreeviewItemComponent(defaultConfig) {
         var _this = this;
         this.defaultConfig = defaultConfig;
@@ -12,7 +12,7 @@ var TreeviewItemComponent = (function () {
         };
         this.onCheckedChange = function () {
             var checked = _this.item.checked;
-            if (!_.isNil(_this.item.children) && !_this.config.decoupleChildFromParent) {
+            if (!isNil(_this.item.children) && !_this.config.decoupleChildFromParent) {
                 _this.item.children.forEach(function (child) { return child.setCheckedRecursive(checked); });
             }
             _this.checkedChange.emit(checked);
@@ -50,13 +50,13 @@ var TreeviewItemComponent = (function () {
     ];
     /** @nocollapse */
     TreeviewItemComponent.ctorParameters = function () { return [
-        { type: TreeviewConfig, },
+        { type: TreeviewConfig }
     ]; };
     TreeviewItemComponent.propDecorators = {
-        "config": [{ type: Input },],
-        "template": [{ type: Input },],
-        "item": [{ type: Input },],
-        "checkedChange": [{ type: Output },],
+        config: [{ type: Input }],
+        template: [{ type: Input }],
+        item: [{ type: Input }],
+        checkedChange: [{ type: Output }]
     };
     return TreeviewItemComponent;
 }());

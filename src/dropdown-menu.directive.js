@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { DropdownDirective } from './dropdown.directive';
-var DropdownMenuDirective = (function () {
+var DropdownMenuDirective = /** @class */ (function () {
     function DropdownMenuDirective(dropdown) {
         this.dropdown = dropdown;
     }
@@ -16,7 +16,7 @@ var DropdownMenuDirective = (function () {
     ];
     /** @nocollapse */
     DropdownMenuDirective.ctorParameters = function () { return [
-        { type: DropdownDirective, },
+        { type: DropdownDirective }
     ]; };
     return DropdownMenuDirective;
 }());

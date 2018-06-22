@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Injectable } from '@angular/core';
-var TreeviewI18n = (function () {
+var TreeviewI18n = /** @class */ (function () {
     function TreeviewI18n() {
     }
     TreeviewI18n.decorators = [
@@ -18,7 +18,7 @@ var TreeviewI18n = (function () {
     return TreeviewI18n;
 }());
 export { TreeviewI18n };
-var TreeviewI18nDefault = (function (_super) {
+var TreeviewI18nDefault = /** @class */ (function (_super) {
     __extends(TreeviewI18nDefault, _super);
     function TreeviewI18nDefault() {
         return _super !== null && _super.apply(this, arguments) || this;

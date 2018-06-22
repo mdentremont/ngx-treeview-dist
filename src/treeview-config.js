@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-var TreeviewConfig = (function () {
+var TreeviewConfig = /** @class */ (function () {
     function TreeviewConfig() {
         this.hasAllCheckBox = true;
         this.hasFilter = false;

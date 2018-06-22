@@ -3,7 +3,7 @@ import { TreeviewI18n } from './treeview-i18n';
 import { TreeviewConfig } from './treeview-config';
 import { TreeviewComponent } from './treeview.component';
 import { DropdownDirective } from './dropdown.directive';
-var DropdownTreeviewComponent = (function () {
+var DropdownTreeviewComponent = /** @class */ (function () {
     function DropdownTreeviewComponent(i18n, defaultConfig) {
         this.i18n = i18n;
         this.defaultConfig = defaultConfig;
@@ -30,19 +30,19 @@ var DropdownTreeviewComponent = (function () {
     ];
     /** @nocollapse */
     DropdownTreeviewComponent.ctorParameters = function () { return [
-        { type: TreeviewI18n, },
-        { type: TreeviewConfig, },
+        { type: TreeviewI18n },
+        { type: TreeviewConfig }
     ]; };
     DropdownTreeviewComponent.propDecorators = {
-        "buttonClass": [{ type: Input },],
-        "headerTemplate": [{ type: Input },],
-        "itemTemplate": [{ type: Input },],
-        "items": [{ type: Input },],
-        "config": [{ type: Input },],
-        "selectedChange": [{ type: Output },],
-        "filterChange": [{ type: Output },],
-        "treeviewComponent": [{ type: ViewChild, args: [TreeviewComponent,] },],
-        "dropdownDirective": [{ type: ViewChild, args: [DropdownDirective,] },],
+        buttonClass: [{ type: Input }],
+        headerTemplate: [{ type: Input }],
+        itemTemplate: [{ type: Input }],
+        items: [{ type: Input }],
+        config: [{ type: Input }],
+        selectedChange: [{ type: Output }],
+        filterChange: [{ type: Output }],
+        treeviewComponent: [{ type: ViewChild, args: [TreeviewComponent,] }],
+        dropdownDirective: [{ type: ViewChild, args: [DropdownDirective,] }]
     };
     return DropdownTreeviewComponent;
 }());

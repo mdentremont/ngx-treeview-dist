@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
-var TreeviewEventParser = (function () {
+import { isNil } from 'lodash';
+var TreeviewEventParser = /** @class */ (function () {
     function TreeviewEventParser() {
     }
     TreeviewEventParser.decorators = [
@@ -19,14 +19,14 @@ var TreeviewEventParser = (function () {
     return TreeviewEventParser;
 }());
 export { TreeviewEventParser };
-var DefaultTreeviewEventParser = (function (_super) {
+var DefaultTreeviewEventParser = /** @class */ (function (_super) {
     __extends(DefaultTreeviewEventParser, _super);
     function DefaultTreeviewEventParser() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     DefaultTreeviewEventParser.prototype.getSelectedChange = function (component) {
         var checkedItems = component.selection.checkedItems;
-        if (!_.isNil(checkedItems)) {
+        if (!isNil(checkedItems)) {
             return checkedItems.map(function (item) { return item.value; });
         }
         return [];
@@ -37,7 +37,7 @@ var DefaultTreeviewEventParser = (function (_super) {
     return DefaultTreeviewEventParser;
 }(TreeviewEventParser));
 export { DefaultTreeviewEventParser };
-var DownlineTreeviewEventParser = (function (_super) {
+var DownlineTreeviewEventParser = /** @class */ (function (_super) {
     __extends(DownlineTreeviewEventParser, _super);
     function DownlineTreeviewEventParser() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -45,11 +45,11 @@ var DownlineTreeviewEventParser = (function (_super) {
     DownlineTreeviewEventParser.prototype.getSelectedChange = function (component) {
         var _this = this;
         var items = component.items;
-        if (!_.isNil(items)) {
+        if (!isNil(items)) {
             var result_1 = [];
             items.forEach(function (item) {
                 var links = _this.getLinks(item, null);
-                if (!_.isNil(links)) {
+                if (!isNil(links)) {
                     result_1 = result_1.concat(links);
                 }
             });
@@ -59,7 +59,7 @@ var DownlineTreeviewEventParser = (function (_super) {
     };
     DownlineTreeviewEventParser.prototype.getLinks = function (item, parent) {
         var _this = this;
-        if (!_.isNil(item.children)) {
+        if (!isNil(item.children)) {
             var link_1 = {
                 item: item,
                 parent: parent
@@ -67,7 +67,7 @@ var DownlineTreeviewEventParser = (function (_super) {
             var result_2 = [];
             item.children.forEach(function (child) {
                 var links = _this.getLinks(child, link_1);
-                if (!_.isNil(links)) {
+                if (!isNil(links)) {
                     result_2 = result_2.concat(links);
                 }
             });
@@ -87,7 +87,7 @@ var DownlineTreeviewEventParser = (function (_super) {
     return DownlineTreeviewEventParser;
 }(TreeviewEventParser));
 export { DownlineTreeviewEventParser };
-var OrderDownlineTreeviewEventParser = (function (_super) {
+var OrderDownlineTreeviewEventParser = /** @class */ (function (_super) {
     __extends(OrderDownlineTreeviewEventParser, _super);
     function OrderDownlineTreeviewEventParser() {
         var _this = _super !== null && _super.apply(this, arguments) || this;

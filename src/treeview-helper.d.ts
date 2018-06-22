@@ -4,4 +4,7 @@ export declare const TreeviewHelper: {
     findItemInList: (list: TreeviewItem[], value: any) => TreeviewItem;
     findParent: (root: TreeviewItem, item: TreeviewItem) => TreeviewItem;
     removeItem: (root: TreeviewItem, item: TreeviewItem) => boolean;
+    concatSelection: (items: TreeviewItem[], checked: TreeviewItem[], unchecked: TreeviewItem[]) => {
+        [k: string]: TreeviewItem[];
+    };
 };

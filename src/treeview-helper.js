@@ -1,12 +1,13 @@
-import * as _ from 'lodash';
+import { concat, isNil, pull } from 'lodash';
 export var TreeviewHelper = {
     findItem: findItem,
     findItemInList: findItemInList,
     findParent: findParent,
-    removeItem: removeItem
+    removeItem: removeItem,
+    concatSelection: concatSelection
 };
 function findItem(root, value) {
-    if (_.isNil(root)) {
+    if (isNil(root)) {
         return undefined;
     }
     if (root.value === value) {
@@ -24,7 +25,7 @@ function findItem(root, value) {
     return undefined;
 }
 function findItemInList(list, value) {
-    if (_.isNil(list)) {
+    if (isNil(list)) {
         return undefined;
     }
     for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
@@ -37,7 +38,7 @@ function findItemInList(list, value) {
     return undefined;
 }
 function findParent(root, item) {
-    if (_.isNil(root) || _.isNil(root.children)) {
+    if (isNil(root) || isNil(root.children)) {
         return undefined;
     }
     for (var _i = 0, _a = root.children; _i < _a.length; _i++) {
@@ -57,7 +58,7 @@ function findParent(root, item) {
 function removeItem(root, item) {
     var parent = findParent(root, item);
     if (parent) {
-        _.pull(parent.children, item);
+        pull(parent.children, item);
         if (parent.children.length === 0) {
             parent.children = undefined;
         }
@@ -67,5 +68,19 @@ function removeItem(root, item) {
         return true;
     }
     return false;
+}
+function concatSelection(items, checked, unchecked) {
+    var checkedItems = checked.slice();
+    var uncheckedItems = unchecked.slice();
+    for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+        var item = items_1[_i];
+        var selection = item.getSelection();
+        checkedItems = concat(checkedItems, selection.checkedItems);
+        uncheckedItems = concat(uncheckedItems, selection.uncheckedItems);
+    }
+    return {
+        checked: checkedItems,
+        unchecked: uncheckedItems
+    };
 }
 //# sourceMappingURL=treeview-helper.js.map

@@ -9,12 +9,13 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Component, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import * as _ from 'lodash';
+import { isNil, includes } from 'lodash';
 import { TreeviewI18n } from './treeview-i18n';
 import { TreeviewItem } from './treeview-item';
 import { TreeviewConfig } from './treeview-config';
 import { TreeviewEventParser } from './treeview-event-parser';
-var FilterTreeviewItem = (function (_super) {
+import { TreeviewHelper } from './treeview-helper';
+var FilterTreeviewItem = /** @class */ (function (_super) {
     __extends(FilterTreeviewItem, _super);
     function FilterTreeviewItem(item) {
         var _this = _super.call(this, {
@@ -48,7 +49,7 @@ var FilterTreeviewItem = (function (_super) {
     };
     return FilterTreeviewItem;
 }(TreeviewItem));
-var TreeviewComponent = (function () {
+var TreeviewComponent = /** @class */ (function () {
     function TreeviewComponent(i18n, defaultConfig, eventParser) {
         this.i18n = i18n;
         this.defaultConfig = defaultConfig;
@@ -62,7 +63,7 @@ var TreeviewComponent = (function () {
     }
     Object.defineProperty(TreeviewComponent.prototype, "hasFilterItems", {
         get: function () {
-            return !_.isNil(this.filterItems) && this.filterItems.length > 0;
+            return !isNil(this.filterItems) && this.filterItems.length > 0;
         },
         enumerable: true,
         configurable: true
@@ -76,8 +77,8 @@ var TreeviewComponent = (function () {
     });
     TreeviewComponent.prototype.ngOnChanges = function (changes) {
         var itemsSimpleChange = changes['items'];
-        if (!_.isNil(itemsSimpleChange)) {
-            if (!_.isNil(this.items)) {
+        if (!isNil(itemsSimpleChange)) {
+            if (!isNil(this.items)) {
                 this.updateFilterItems();
                 this.updateCollapsedOfAll();
                 this.raiseSelectedChange();
@@ -99,15 +100,7 @@ var TreeviewComponent = (function () {
      * IE has an issue where it does not send a change event for when an indeterminate checkbox changes to become determinate.
      * To work around this we explicity set it checked if it's indeterminate and we use the onClick event instead of onChange.
      */
-    /**
-         * IE has an issue where it does not send a change event for when an indeterminate checkbox changes to become determinate.
-         * To work around this we explicity set it checked if it's indeterminate and we use the onClick event instead of onChange.
-         */
-    TreeviewComponent.prototype.onAllCheckedChange = /**
-         * IE has an issue where it does not send a change event for when an indeterminate checkbox changes to become determinate.
-         * To work around this we explicity set it checked if it's indeterminate and we use the onClick event instead of onChange.
-         */
-    function () {
+    TreeviewComponent.prototype.onAllCheckedChange = function () {
         var _this = this;
         this.standardizeEventOrder(function () {
             if (_this.allItem.indeterminate) {
@@ -127,15 +120,7 @@ var TreeviewComponent = (function () {
      * IE performs the onClick event before the onChange event while Chrome and perform it in the other order.
      * By pushing the callback onto the event queue it will always be executed immediately after all pending events
      */
-    /**
-         * IE performs the onClick event before the onChange event while Chrome and perform it in the other order.
-         * By pushing the callback onto the event queue it will always be executed immediately after all pending events
-         */
-    TreeviewComponent.prototype.standardizeEventOrder = /**
-         * IE performs the onClick event before the onChange event while Chrome and perform it in the other order.
-         * By pushing the callback onto the event queue it will always be executed immediately after all pending events
-         */
-    function (callback) {
+    TreeviewComponent.prototype.standardizeEventOrder = function (callback) {
         setTimeout(callback, 0);
     };
     TreeviewComponent.prototype.onItemCheckedChange = function (item, checked) {
@@ -163,13 +148,10 @@ var TreeviewComponent = (function () {
     TreeviewComponent.prototype.generateSelection = function () {
         var checkedItems = [];
         var uncheckedItems = [];
-        if (!_.isNil(this.items)) {
-            for (var _i = 0, _a = this.items; _i < _a.length; _i++) {
-                var item = _a[_i];
-                var selection = item.getSelection();
-                checkedItems = _.concat(checkedItems, selection.checkedItems);
-                uncheckedItems = _.concat(uncheckedItems, selection.uncheckedItems);
-            }
+        if (!isNil(this.items)) {
+            var selection = TreeviewHelper.concatSelection(this.items, checkedItems, uncheckedItems);
+            checkedItems = selection.checked;
+            uncheckedItems = selection.unchecked;
         }
         this.selection = {
             checkedItems: checkedItems,
@@ -183,7 +165,7 @@ var TreeviewComponent = (function () {
             var filterText_1 = this.filterText.toLowerCase();
             this.items.forEach(function (item) {
                 var newItem = _this.filterItem(item, filterText_1);
-                if (!_.isNil(newItem)) {
+                if (!isNil(newItem)) {
                     filterItems_1.push(newItem);
                 }
             });
@@ -196,16 +178,16 @@ var TreeviewComponent = (function () {
     };
     TreeviewComponent.prototype.filterItem = function (item, filterText) {
         var _this = this;
-        var isMatch = _.includes(item.text.toLowerCase(), filterText);
+        var isMatch = includes(item.text.toLowerCase(), filterText);
         if (isMatch) {
             return item;
         }
         else {
-            if (!_.isNil(item.children)) {
+            if (!isNil(item.children)) {
                 var children_1 = [];
                 item.children.forEach(function (child) {
                     var newChild = _this.filterItem(child, filterText);
-                    if (!_.isNil(newChild)) {
+                    if (!isNil(newChild)) {
                         children_1.push(newChild);
                     }
                 });
@@ -256,17 +238,17 @@ var TreeviewComponent = (function () {
     ];
     /** @nocollapse */
     TreeviewComponent.ctorParameters = function () { return [
-        { type: TreeviewI18n, },
-        { type: TreeviewConfig, },
-        { type: TreeviewEventParser, },
+        { type: TreeviewI18n },
+        { type: TreeviewConfig },
+        { type: TreeviewEventParser }
     ]; };
     TreeviewComponent.propDecorators = {
-        "headerTemplate": [{ type: Input },],
-        "itemTemplate": [{ type: Input },],
-        "items": [{ type: Input },],
-        "config": [{ type: Input },],
-        "selectedChange": [{ type: Output },],
-        "filterChange": [{ type: Output },],
+        headerTemplate: [{ type: Input }],
+        itemTemplate: [{ type: Input }],
+        items: [{ type: Input }],
+        config: [{ type: Input }],
+        selectedChange: [{ type: Output }],
+        filterChange: [{ type: Output }]
     };
     return TreeviewComponent;
 }());

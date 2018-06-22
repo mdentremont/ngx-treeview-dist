@@ -1,31 +1,32 @@
-import * as _ from 'lodash';
-var TreeviewItem = (function () {
+import { isBoolean, isNil, isString } from 'lodash';
+import { TreeviewHelper } from './treeview-helper';
+var TreeviewItem = /** @class */ (function () {
     function TreeviewItem(item, autoCorrectChecked) {
         if (autoCorrectChecked === void 0) { autoCorrectChecked = false; }
         var _this = this;
         this.internalDisabled = false;
         this.internalChecked = true;
         this.internalCollapsed = false;
-        if (_.isNil(item)) {
+        if (isNil(item)) {
             throw new Error('Item must be defined');
         }
-        if (_.isString(item.text)) {
+        if (isString(item.text)) {
             this.text = item.text;
         }
         else {
             throw new Error('A text of item must be string object');
         }
         this.value = item.value;
-        if (_.isBoolean(item.checked)) {
+        if (isBoolean(item.checked)) {
             this.checked = item.checked;
         }
-        if (_.isBoolean(item.collapsed)) {
+        if (isBoolean(item.collapsed)) {
             this.collapsed = item.collapsed;
         }
-        if (_.isBoolean(item.disabled)) {
+        if (isBoolean(item.disabled)) {
             this.disabled = item.disabled;
         }
-        if (!_.isNil(item.children) && item.children.length > 0) {
+        if (!isNil(item.children) && item.children.length > 0) {
             this.children = item.children.map(function (child) {
                 if (_this.disabled === true) {
                     child.disabled = true;
@@ -61,7 +62,7 @@ var TreeviewItem = (function () {
     TreeviewItem.prototype.setCheckedRecursive = function (value) {
         if (!this.internalDisabled) {
             this.internalChecked = value;
-            if (!_.isNil(this.internalChildren)) {
+            if (!isNil(this.internalChildren)) {
                 this.internalChildren.forEach(function (child) { return child.setCheckedRecursive(value); });
             }
         }
@@ -73,7 +74,7 @@ var TreeviewItem = (function () {
         set: function (value) {
             if (this.internalDisabled !== value) {
                 this.internalDisabled = value;
-                if (!_.isNil(this.internalChildren)) {
+                if (!isNil(this.internalChildren)) {
                     this.internalChildren.forEach(function (child) { return child.disabled = value; });
                 }
             }
@@ -95,7 +96,7 @@ var TreeviewItem = (function () {
     });
     TreeviewItem.prototype.setCollapsedRecursive = function (value) {
         this.internalCollapsed = value;
-        if (!_.isNil(this.internalChildren)) {
+        if (!isNil(this.internalChildren)) {
             this.internalChildren.forEach(function (child) { return child.setCollapsedRecursive(value); });
         }
     };
@@ -105,11 +106,11 @@ var TreeviewItem = (function () {
         },
         set: function (value) {
             if (this.internalChildren !== value) {
-                if (!_.isNil(value) && value.length === 0) {
+                if (!isNil(value) && value.length === 0) {
                     throw new Error('Children must be not an empty array');
                 }
                 this.internalChildren = value;
-                if (!_.isNil(this.internalChildren)) {
+                if (!isNil(this.internalChildren)) {
                     var checked_1 = null;
                     this.internalChildren.forEach(function (child) {
                         if (checked_1 === null) {
@@ -132,7 +133,7 @@ var TreeviewItem = (function () {
     TreeviewItem.prototype.getSelection = function () {
         var checkedItems = [];
         var uncheckedItems = [];
-        if (_.isNil(this.internalChildren)) {
+        if (isNil(this.internalChildren)) {
             if (this.internalChecked) {
                 checkedItems.push(this);
             }
@@ -141,12 +142,9 @@ var TreeviewItem = (function () {
             }
         }
         else {
-            for (var _i = 0, _a = this.internalChildren; _i < _a.length; _i++) {
-                var child = _a[_i];
-                var selection = child.getSelection();
-                checkedItems = _.concat(checkedItems, selection.checkedItems);
-                uncheckedItems = _.concat(uncheckedItems, selection.uncheckedItems);
-            }
+            var selection = TreeviewHelper.concatSelection(this.internalChildren, checkedItems, uncheckedItems);
+            checkedItems = selection.checked;
+            uncheckedItems = selection.unchecked;
         }
         return {
             checkedItems: checkedItems,
@@ -158,7 +156,7 @@ var TreeviewItem = (function () {
     };
     TreeviewItem.prototype.getCorrectChecked = function () {
         var checked = null;
-        if (!_.isNil(this.internalChildren)) {
+        if (!isNil(this.internalChildren)) {
             for (var _i = 0, _a = this.internalChildren; _i < _a.length; _i++) {
                 var child = _a[_i];
                 child.internalChecked = child.getCorrectChecked();

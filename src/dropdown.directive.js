@@ -1,6 +1,6 @@
 import { Directive, Input, Output, HostBinding, HostListener, EventEmitter } from '@angular/core';
-import * as _ from 'lodash';
-var DropdownDirective = (function () {
+import { isNil } from 'lodash';
+var DropdownDirective = /** @class */ (function () {
     function DropdownDirective() {
         // tslint:disable-next-line:no-input-rename
         this.internalOpen = false;
@@ -42,7 +42,7 @@ var DropdownDirective = (function () {
         }
     };
     DropdownDirective.prototype.isEventFromToggle = function (event) {
-        return !_.isNil(this.toggleElement) && this.toggleElement.contains(event.target);
+        return !isNil(this.toggleElement) && this.toggleElement.contains(event.target);
     };
     DropdownDirective.decorators = [
         { type: Directive, args: [{
@@ -50,13 +50,12 @@ var DropdownDirective = (function () {
                     exportAs: 'ngxDropdown'
                 },] },
     ];
-    /** @nocollapse */
     DropdownDirective.propDecorators = {
-        "internalOpen": [{ type: Input, args: ['open',] },],
-        "openChange": [{ type: Output },],
-        "isOpen": [{ type: HostBinding, args: ['class.show',] },],
-        "onKeyupEsc": [{ type: HostListener, args: ['keyup.esc',] },],
-        "onDocumentClick": [{ type: HostListener, args: ['document:click', ['$event'],] },],
+        internalOpen: [{ type: Input, args: ['open',] }],
+        openChange: [{ type: Output }],
+        isOpen: [{ type: HostBinding, args: ['class.show',] }],
+        onKeyupEsc: [{ type: HostListener, args: ['keyup.esc',] }],
+        onDocumentClick: [{ type: HostListener, args: ['document:click', ['$event'],] }]
     };
     return DropdownDirective;
 }());
