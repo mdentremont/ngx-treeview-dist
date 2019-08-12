@@ -38,10 +38,10 @@ export declare class TreeviewComponent implements OnChanges {
     standardizeEventOrder(callback: any): void;
     onItemCheckedChange(item: TreeviewItem, checked: boolean): void;
     raiseSelectedChange(): void;
-    private createHeaderTemplateContext();
-    private generateSelection();
-    private updateFilterItems();
-    private filterItem(item, filterText);
-    private updateCheckedOfAll();
-    private updateCollapsedOfAll();
+    private createHeaderTemplateContext;
+    private generateSelection;
+    private updateFilterItems;
+    private filterItem;
+    private updateCheckedOfAll;
+    private updateCollapsedOfAll;
 }

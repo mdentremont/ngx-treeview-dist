@@ -27,5 +27,5 @@ export declare class TreeviewItem {
     children: TreeviewItem[];
     getSelection(): TreeviewSelection;
     correctChecked(): void;
-    private getCorrectChecked();
+    private getCorrectChecked;
 }
